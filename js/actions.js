@@ -12,6 +12,13 @@ let winPositions = [
 ]; 
 
 
+function colorWinner() {
+  let elements = document.getElementsByClassName(playerSymbol); // get all elements
+	for(let i = 0; i < elements.length; i++){
+		elements[i].style.color = "Red";
+	}
+}
+
 function checkWinner() { // Vérifie si toute les combinaisons possibles sont valides
   for (let i = 0; i < winPositions.length; i++) {
     if (
@@ -21,53 +28,56 @@ function checkWinner() { // Vérifie si toute les combinaisons possibles sont va
       ) {
         if (round === 9) {
           
-          if (playerSymbol == "X") {
+          if (playerSymbol == "x") {
+            colorWinner() 
             document.getElementById("playerOne").style.backgroundColor="Red"
-            document.getElementById("playerWinner").textContent = "GAGNEE !!"
+            document.getElementById("playerWinner").textContent = "GAGNE !!"
             gameFinished = true;
-          } else if (playerSymbol == "O") {
+          } else if (playerSymbol == "o") {
+            colorWinner()
             document.getElementById("playerTwo").style.backgroundColor="Red"
-            document.getElementById("playerWinner2").textContent = "GAGNEE !!"
+            document.getElementById("playerWinner2").textContent = "GAGNE !!"
             gameFinished = true;
           }
 
-        } else if (playerSymbol == "X") {
+        } else if (playerSymbol == "x") {
+            colorWinner() 
             document.getElementById("playerOne").style.backgroundColor="Red"
-            document.getElementById("playerWinner").textContent = "GAGNEE !!"
+            document.getElementById("playerWinner").textContent = "GAGNE !!"
             gameFinished = true;
-          } else if (playerSymbol == "O") {
+          } else if (playerSymbol == "o") {
+            colorWinner()
             document.getElementById("playerTwo").style.backgroundColor="Red"
-            document.getElementById("playerWinner2").textContent = "GAGNEE !!"
+            document.getElementById("playerWinner2").textContent = "GAGNE !!"
             gameFinished = true;
           }
     }
         
   }
-  
 }
 
 function symbolCheck() {
   if (playerSymbol === "")  { // Condition par défaut
-    playerSymbol = "X";
+    playerSymbol = "x";
     playerName1 = "Player 1";
     document.getElementById("name1").textContent = playerName1
-    document.getElementById("symbol1").textContent = "Symbole : X"
+    document.getElementById("symbol1").textContent = "Symbole : x"
     document.getElementById("playerOne").style.backgroundColor="White"
     document.getElementById("playerTwo").style.backgroundColor="Red"
     document.getElementById("playerTwo").style.color="White"
-  } else if (playerSymbol === "X") {
-    playerSymbol = "O";
+  } else if (playerSymbol === "x") {
+    playerSymbol = "o";
     playerName2 = "Player 2";
     document.getElementById("name2").textContent = playerName2
-    document.getElementById("symbol2").textContent = "Symbole : O"
+    document.getElementById("symbol2").textContent = "Symbole : o"
     document.getElementById("playerTwo").style.backgroundColor="White"
     document.getElementById("playerOne").style.backgroundColor="Red"
     document.getElementById("playerOne").style.color="White"
   } else {  
-    playerSymbol = "X"
+    playerSymbol = "x"
     playerName1 = "Player 1";
     document.getElementById("name1").textContent = playerName1
-    document.getElementById("symbol1").textContent = "Symbole : X"
+    document.getElementById("symbol1").textContent = "Symbole : x"
     document.getElementById("playerOne").style.backgroundColor="White"
     document.getElementById("playerTwo").style.backgroundColor="Red"
     document.getElementById("playerTwo").style.color="White"
