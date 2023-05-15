@@ -19,16 +19,31 @@ function checkWinner() { // Vérifie si toute les combinaisons possibles sont va
       document.getElementById(winPositions[i][1]).innerHTML === playerSymbol &&
       document.getElementById(winPositions[i][2]).innerHTML === playerSymbol
       ) {
-        if (playerSymbol == "X") {
-          document.getElementById("playerOne").style.backgroundColor="Red"
-          document.getElementById("playerWinner").textContent = "GAGNEE"
+        if (round === 9) {
           
-        } else if (playerSymbol == "O") {
-          document.getElementById("playerTwo").style.backgroundColor="Red"
-          document.getElementById("playerWinner2").textContent = "GAGNEE"
-        }
-      }
+          if (playerSymbol == "X") {
+            document.getElementById("playerOne").style.backgroundColor="Red"
+            document.getElementById("playerWinner").textContent = "GAGNEE !!"
+            gameFinished = true;
+          } else if (playerSymbol == "O") {
+            document.getElementById("playerTwo").style.backgroundColor="Red"
+            document.getElementById("playerWinner2").textContent = "GAGNEE !!"
+            gameFinished = true;
+          }
+
+        } else if (playerSymbol == "X") {
+            document.getElementById("playerOne").style.backgroundColor="Red"
+            document.getElementById("playerWinner").textContent = "GAGNEE !!"
+            gameFinished = true;
+          } else if (playerSymbol == "O") {
+            document.getElementById("playerTwo").style.backgroundColor="Red"
+            document.getElementById("playerWinner2").textContent = "GAGNEE !!"
+            gameFinished = true;
+          }
+    }
+        
   }
+  
 }
 
 function symbolCheck() {
@@ -49,13 +64,13 @@ function symbolCheck() {
     document.getElementById("playerOne").style.backgroundColor="Red"
     document.getElementById("playerOne").style.color="White"
   } else {  
-      playerSymbol = "X"
-      playerName1 = "Player 1";
-      document.getElementById("name1").textContent = playerName1
-      document.getElementById("symbol1").textContent = "Symbole : X"
-      document.getElementById("playerOne").style.backgroundColor="White"
-      document.getElementById("playerTwo").style.backgroundColor="Red"
-      document.getElementById("playerTwo").style.color="White"
+    playerSymbol = "X"
+    playerName1 = "Player 1";
+    document.getElementById("name1").textContent = playerName1
+    document.getElementById("symbol1").textContent = "Symbole : X"
+    document.getElementById("playerOne").style.backgroundColor="White"
+    document.getElementById("playerTwo").style.backgroundColor="Red"
+    document.getElementById("playerTwo").style.color="White"
   } 
 }
 
@@ -65,7 +80,6 @@ for (let i = 1; i <= 9; i++) {
   et reçois des événements associés*/
   document.getElementById(i.toString()).addEventListener( 
   "click", function() {
-      
       round++ // On démarre le compteur de tours
       
       symbolCheck() // On vérifie qui est le 1er joueur et qui joue pour chaque tour 
@@ -79,6 +93,8 @@ for (let i = 1; i <= 9; i++) {
         symbolCheck()
       }
 
+      checkWinner()
+
       if (round === 9) {
         roundMax = true
           if (roundMax === true) {
@@ -90,7 +106,7 @@ for (let i = 1; i <= 9; i++) {
       if (roundMax === true && gameFinished === true) {
         playerSymbol = null;
       }
-      checkWinner()
+      
     }
   );
 } 
