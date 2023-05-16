@@ -1,11 +1,25 @@
+h1 {
+    text-align: center;
+}
+
+section.game {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .game {
     display: flex;
     flex-direction: row;
 }
 
 table, td, th {
-    border: 1px solid gray;
+    border: 2px solid gray;
     border-collapse: collapse;
+}
+
+#t1 {
+    border-bottom: none;
 }
 
 td {
@@ -29,6 +43,34 @@ th.playerTwo {
 }
 
 .o {
-    color: red;
+    color: black;
     font-size: 80px;
     } 
+
+#playerWinner, #playerWinner2 {
+    font-weight: 900;
+    font-size: 30px;
+}
+
+#resetBtn {
+    position: absolute;
+    left: 875px;
+    top: 420px;
+    border-radius: 20px;
+    padding: 20px 50px;
+    font-size: 35px;
+    background-color:firebrick;
+    border-color: firebrick;
+    border: none;
+    color: white;
+}
+
+#resetBtn:hover {
+    background-color: red;
+    cursor: pointer;
+}
+
+#resetBtn:active {
+    transform: scale(0.95);
+}
+
