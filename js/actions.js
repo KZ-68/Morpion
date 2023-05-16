@@ -148,7 +148,7 @@ function symbolCheck() {
     playerSymbol = "x";
     playerName1 = "Player 1";
     document.getElementById("name1").textContent = playerName1
-    document.getElementById("symbol1").textContent = "Symbole : X"
+    document.getElementById("symbol1").textContent = "Symbole : x"
     document.getElementById("playerOne").style.backgroundColor="White"
     document.getElementById("playerTwo").style.backgroundColor="Red"
     document.getElementById("playerTwo").style.color="White"
@@ -156,7 +156,7 @@ function symbolCheck() {
     playerSymbol = "o";
     playerName2 = "Player 2";
     document.getElementById("name2").textContent = playerName2
-    document.getElementById("symbol2").textContent = "Symbole : O"
+    document.getElementById("symbol2").textContent = "Symbole : o"
     document.getElementById("playerTwo").style.backgroundColor="White"
     document.getElementById("playerOne").style.backgroundColor="Red"
     document.getElementById("playerOne").style.color="White"
@@ -164,7 +164,7 @@ function symbolCheck() {
     playerSymbol = "x"
     playerName1 = "Player 1";
     document.getElementById("name1").textContent = playerName1
-    document.getElementById("symbol1").textContent = "Symbole : X"
+    document.getElementById("symbol1").textContent = "Symbole : x"
     document.getElementById("playerOne").style.backgroundColor="White"
     document.getElementById("playerTwo").style.backgroundColor="Red"
     document.getElementById("playerTwo").style.color="White"
