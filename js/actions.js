@@ -1,6 +1,14 @@
 let playerSymbol = ""
-let playerName1
-let playerName2
+const playerName1 = document.getElementById("name1")
+const playerName2 = document.getElementById("name2")
+
+const nameField1 = document.createElement("input")
+nameField1.classList.add("nameField1")
+playerName1.appendChild(nameField1)
+const nameField2 = document.createElement("input")
+nameField2.classList.add("nameField2")
+playerName2.appendChild(nameField2)
+
 let round = 0
 let roundMax = false
 let gameFinished = false
@@ -24,146 +32,159 @@ function displayReset() {
   }
 }
 
-/* function colorWinner() { // Ajoute une couleur rouge à tous les éléments de la classe playerSymbol 
-  let elements = document.getElementsByClassName(playerSymbol); 
-	for(let i = 0; i < elements.length; i++){ // Boucle qui parcours la longueur du tableau elements associés à la classe playerSymbol
-		elements[i].style.color = "Red";
-	}
-} */
+function checkWinner() { // Vérifie si toutes les combinaisons possibles sont valides
+  // // Condition des paterns pour les lignes horizontaux
+  // condition1 =  document.getElementById(winPositions[0][0]).innerHTML === playerSymbol &&
+  //               document.getElementById(winPositions[0][1]).innerHTML === playerSymbol &&
+  //               document.getElementById(winPositions[0][2]).innerHTML === playerSymbol
 
-function checkWinner() { // Vérifie si toute les combinaisons possibles sont valides
-  // Condition des paterns pour les lignes horizontaux
-  condition1 =  document.getElementById(winPositions[0][0]).innerHTML === playerSymbol &&
-                document.getElementById(winPositions[0][1]).innerHTML === playerSymbol &&
-                document.getElementById(winPositions[0][2]).innerHTML === playerSymbol
-    
+  // condition2 =  document.getElementById(winPositions[1][0]).innerHTML === playerSymbol &&
+  //               document.getElementById(winPositions[1][1]).innerHTML === playerSymbol &&
+  //               document.getElementById(winPositions[1][2]).innerHTML === playerSymbol
 
-  condition2 =  document.getElementById(winPositions[1][0]).innerHTML === playerSymbol &&
-                document.getElementById(winPositions[1][1]).innerHTML === playerSymbol &&
-                document.getElementById(winPositions[1][2]).innerHTML === playerSymbol
+  // condition3 =  document.getElementById(winPositions[2][0]).innerHTML === playerSymbol &&
+  //               document.getElementById(winPositions[2][1]).innerHTML === playerSymbol &&
+  //               document.getElementById(winPositions[2][2]).innerHTML === playerSymbol
 
-  condition3 =  document.getElementById(winPositions[2][0]).innerHTML === playerSymbol &&
-                document.getElementById(winPositions[2][1]).innerHTML === playerSymbol &&
-                document.getElementById(winPositions[2][2]).innerHTML === playerSymbol
+  // // Condition des paterns pour les lignes verticaux
+  // condition4 =  document.getElementById(winPositions[3][0]).innerHTML === playerSymbol &&
+  //               document.getElementById(winPositions[3][1]).innerHTML === playerSymbol &&
+  //               document.getElementById(winPositions[3][2]).innerHTML === playerSymbol
 
-  // Condition des paterns pour les lignes verticaux
-  condition4 =  document.getElementById(winPositions[3][0]).innerHTML === playerSymbol &&
-                document.getElementById(winPositions[3][1]).innerHTML === playerSymbol &&
-                document.getElementById(winPositions[3][2]).innerHTML === playerSymbol
-
-  condition5 =  document.getElementById(winPositions[4][0]).innerHTML === playerSymbol &&
-                document.getElementById(winPositions[4][1]).innerHTML === playerSymbol &&
-                document.getElementById(winPositions[4][2]).innerHTML === playerSymbol
+  // condition5 =  document.getElementById(winPositions[4][0]).innerHTML === playerSymbol &&
+  //               document.getElementById(winPositions[4][1]).innerHTML === playerSymbol &&
+  //               document.getElementById(winPositions[4][2]).innerHTML === playerSymbol
   
-  condition6 =  document.getElementById(winPositions[5][0]).innerHTML === playerSymbol &&
-                document.getElementById(winPositions[5][1]).innerHTML === playerSymbol &&
-                document.getElementById(winPositions[5][2]).innerHTML === playerSymbol
+  // condition6 =  document.getElementById(winPositions[5][0]).innerHTML === playerSymbol &&
+  //               document.getElementById(winPositions[5][1]).innerHTML === playerSymbol &&
+  //               document.getElementById(winPositions[5][2]).innerHTML === playerSymbol
 
 
-  // Condition des paterns pour les diagonales
-  condition7 =  document.getElementById(winPositions[6][0]).innerHTML === playerSymbol &&
-                document.getElementById(winPositions[6][1]).innerHTML === playerSymbol &&
-                document.getElementById(winPositions[6][2]).innerHTML === playerSymbol
+  // // Condition des paterns pour les diagonales
+  // condition7 =  document.getElementById(winPositions[6][0]).innerHTML === playerSymbol &&
+  //               document.getElementById(winPositions[6][1]).innerHTML === playerSymbol &&
+  //               document.getElementById(winPositions[6][2]).innerHTML === playerSymbol
 
-  condition8 =  document.getElementById(winPositions[7][0]).innerHTML === playerSymbol &&
-                document.getElementById(winPositions[7][1]).innerHTML === playerSymbol &&
-                document.getElementById(winPositions[7][2]).innerHTML === playerSymbol
+  // condition8 =  document.getElementById(winPositions[7][0]).innerHTML === playerSymbol &&
+  //               document.getElementById(winPositions[7][1]).innerHTML === playerSymbol &&
+  //               document.getElementById(winPositions[7][2]).innerHTML === playerSymbol
+  
+  // pour chaque condition de victoire (== une combinaison) (et on veut récupérer un nouveau tableau de la même taille == 8)
+  const conditions = winPositions.map((winPositionValue, winPositionIndex) => 
+    // pour chaque cellule de cette combinaison (et on veut récupérer un nouveau tableau de la même taille == 3)
+    winPositionValue.map((winPositionCellValue, winPositionCellIndex) => 
+      // comparaison et return (par la fonction fléchée) du booléen
+      document.getElementById(winPositions[winPositionIndex][winPositionCellIndex]).innerHTML === playerSymbol
+      // pour cette condition, si toutes (every) les comparaisons de cellules ont renvoyé true alors le tout est true, sinon false
+    ).every(winPositionCellComparaison => winPositionCellComparaison)
+  );
 
-    if (condition1 || condition2 || condition3 || condition4 || condition5 || condition6 || condition7 || condition8) {
-       if (round === 9) {
+  // si au moins 1 condition est vraie
+  if (conditions.some(condition => condition)) {
+
+    // if (condition1 || condition2 || condition3 || condition4 || condition5 || condition6 || condition7 || condition8) {
+      // if (round === 9) {
           
-          if (playerSymbol == "x") {
-            document.getElementById("playerOne").style.backgroundColor="Red"
-            document.getElementById("playerWinner").textContent = "GAGNE !!"
-            gameFinished = true;
-          } else if (playerSymbol == "o") {
-            document.getElementById("playerTwo").style.backgroundColor="Red"
-            document.getElementById("playerWinner2").textContent = "GAGNE !!"
-            gameFinished = true;
-          }
+      //   if (playerSymbol == "x") {
+      //     document.getElementById("playerOne").style.backgroundColor="Red"
+      //     document.getElementById("playerWinner").textContent = "GAGNE !!"
+      //     gameFinished = true;
+      //   } else if (playerSymbol == "o") {
+      //     document.getElementById("playerTwo").style.backgroundColor="Red"
+      //     document.getElementById("playerWinner2").textContent = "GAGNE !!"
+      //     gameFinished = true;
+      //   }
 
-        } else if (playerSymbol == "x") {
-            document.getElementById("playerOne").style.backgroundColor="Red"
-            document.getElementById("playerWinner").textContent = "GAGNE !!"
-            gameFinished = true;
-          } else if (playerSymbol == "o") {
-            document.getElementById("playerTwo").style.backgroundColor="Red"
-            document.getElementById("playerWinner2").textContent = "GAGNE !!"
-            gameFinished = true;
-          }
+      // } else if (playerSymbol == "x") {
+      if (playerSymbol == "x") {
+          document.getElementById("playerOne").style.backgroundColor="Red"
+          document.getElementById("playerWinner").textContent = "GAGNE !!"
+          gameFinished = true;
+      } else if (playerSymbol == "o") {
+        document.getElementById("playerTwo").style.backgroundColor="Red"
+        document.getElementById("playerWinner2").textContent = "GAGNE !!"
+        gameFinished = true;
+      }
           
-          // Condition de vérification de chaque patern pour afficher 
-          if (condition1 === true) {
-            document.getElementById(winPositions[0][0]).style.color = "Red"
-            document.getElementById(winPositions[0][1]).style.color = "Red"
-            document.getElementById(winPositions[0][2]).style.color = "Red"
-          }
+          // // Condition de vérification de chaque patern pour afficher 
+          // if (condition1) {
+          //   document.getElementById(winPositions[0][0]).style.color = "Red"
+          //   document.getElementById(winPositions[0][1]).style.color = "Red"
+          //   document.getElementById(winPositions[0][2]).style.color = "Red"
+          // }
 
-          if (condition2 === true) {
-            document.getElementById(winPositions[1][0]).style.color = "Red"
-            document.getElementById(winPositions[1][1]).style.color = "Red"
-            document.getElementById(winPositions[1][2]).style.color = "Red"
-          }
+          // if (condition2) {
+          //   document.getElementById(winPositions[1][0]).style.color = "Red"
+          //   document.getElementById(winPositions[1][1]).style.color = "Red"
+          //   document.getElementById(winPositions[1][2]).style.color = "Red"
+          // }
 
-          if (condition3 === true) {
-            document.getElementById(winPositions[2][0]).style.color = "Red"
-            document.getElementById(winPositions[2][1]).style.color = "Red"
-            document.getElementById(winPositions[2][2]).style.color = "Red"
-          }
+          // if (condition3) {
+          //   document.getElementById(winPositions[2][0]).style.color = "Red"
+          //   document.getElementById(winPositions[2][1]).style.color = "Red"
+          //   document.getElementById(winPositions[2][2]).style.color = "Red"
+          // }
 
-          if (condition4 === true) {
-            document.getElementById(winPositions[3][0]).style.color = "Red"
-            document.getElementById(winPositions[3][1]).style.color = "Red"
-            document.getElementById(winPositions[3][2]).style.color = "Red"
-          }
+          // if (condition4) {
+          //   document.getElementById(winPositions[3][0]).style.color = "Red"
+          //   document.getElementById(winPositions[3][1]).style.color = "Red"
+          //   document.getElementById(winPositions[3][2]).style.color = "Red"
+          // }
 
-          if (condition5 === true) {
-            document.getElementById(winPositions[4][0]).style.color = "Red"
-            document.getElementById(winPositions[4][1]).style.color = "Red"
-            document.getElementById(winPositions[4][2]).style.color = "Red"
-          }
+          // if (condition5) {
+          //   document.getElementById(winPositions[4][0]).style.color = "Red"
+          //   document.getElementById(winPositions[4][1]).style.color = "Red"
+          //   document.getElementById(winPositions[4][2]).style.color = "Red"
+          // }
 
-          if (condition6 === true) {
-            document.getElementById(winPositions[5][0]).style.color = "Red"
-            document.getElementById(winPositions[5][1]).style.color = "Red"
-            document.getElementById(winPositions[5][2]).style.color = "Red"
-          }
+          // if (condition6) {
+          //   document.getElementById(winPositions[5][0]).style.color = "Red"
+          //   document.getElementById(winPositions[5][1]).style.color = "Red"
+          //   document.getElementById(winPositions[5][2]).style.color = "Red"
+          // }
 
-          if (condition7 === true) {
-            document.getElementById(winPositions[6][0]).style.color = "Red"
-            document.getElementById(winPositions[6][1]).style.color = "Red"
-            document.getElementById(winPositions[6][2]).style.color = "Red"
-          }
+          // if (condition7) {
+          //   document.getElementById(winPositions[6][0]).style.color = "Red"
+          //   document.getElementById(winPositions[6][1]).style.color = "Red"
+          //   document.getElementById(winPositions[6][2]).style.color = "Red"
+          // }
 
-          if (condition8 === true) {
-            document.getElementById(winPositions[7][0]).style.color = "Red"
-            document.getElementById(winPositions[7][1]).style.color = "Red"
-            document.getElementById(winPositions[7][2]).style.color = "Red"
-          }
+          // if (condition8) {
+          //   document.getElementById(winPositions[7][0]).style.color = "Red"
+          //   document.getElementById(winPositions[7][1]).style.color = "Red"
+          //   document.getElementById(winPositions[7][2]).style.color = "Red"
+          // }
+
+          // pour chaque position
+          winPositions.forEach((winPositionValue, winPositionIndex) => {
+            // si la condition au même index est vraie
+            if (conditions[winPositionIndex]) {
+              // pour chaque cellule (de cette combinaison de position)
+              winPositionValue.forEach((winPositionCellValue, winPositionCellIndex) => 
+                // on applique la couleur rouge
+                // remarque : winPositionValue[winPositionCellIndex] == winPositions[winPositionIndex][winPositionCellIndex]
+                document.getElementById(winPositionValue[winPositionCellIndex]).style.color = "Red"
+              );
+            }
+          });
   }
 }
 
 function symbolCheck() {
   if (playerSymbol === "")  { // Condition par défaut
     playerSymbol = "x";
-    playerName1 = "Player 1";
-    document.getElementById("name1").textContent = playerName1
     document.getElementById("symbol1").textContent = "Symbole : x"
     document.getElementById("playerOne").style.backgroundColor="White"
     document.getElementById("playerTwo").style.backgroundColor="Red"
     document.getElementById("playerTwo").style.color="White"
   } else if (playerSymbol === "x") {
     playerSymbol = "o";
-    playerName2 = "Player 2";
-    document.getElementById("name2").textContent = playerName2
     document.getElementById("symbol2").textContent = "Symbole : o"
     document.getElementById("playerTwo").style.backgroundColor="White"
     document.getElementById("playerOne").style.backgroundColor="Red"
     document.getElementById("playerOne").style.color="White"
   } else {  
     playerSymbol = "x"
-    playerName1 = "Player 1";
-    document.getElementById("name1").textContent = playerName1
     document.getElementById("symbol1").textContent = "Symbole : x"
     document.getElementById("playerOne").style.backgroundColor="White"
     document.getElementById("playerTwo").style.backgroundColor="Red"
@@ -178,6 +199,7 @@ for (let i = 1; i <= 9; i++) {
   document.getElementById(i.toString()).addEventListener( 
   "click", function() {
       round++ // On démarre le compteur de tours
+      
       
       symbolCheck() // On vérifie qui est le 1er joueur et qui joue pour chaque tour 
 
@@ -194,13 +216,13 @@ for (let i = 1; i <= 9; i++) {
 
       if (round === 9) {
         roundMax = true
-          if (roundMax === true) {
+          if (roundMax) {
           gameFinished = true;
         }
         
       } 
 
-      if (roundMax === true && gameFinished === true) {
+      if (roundMax && gameFinished) {
         playerSymbol = null;
         alert("Partie Terminé !")
       }
