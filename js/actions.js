@@ -262,11 +262,13 @@ for (let i = 1; i <= 9; i++) {
 
       symbolCheck() // On vérifie qui est le 1er joueur et qui joue pour chaque tour 
 
-      if (!gameFinished) { // Si un élément <td id=""> est vide ou si la valeur de gameFinished n'est pas true :
+      if (this.innerHTML == "" && !gameFinished) { // Si un élément <td id=""> est vide ou si la valeur de gameFinished n'est pas true :
         this.innerHTML = player; // Alors on y ajoute un symbole de type String
         this.classList.add(player.toLowerCase()); /* On ajoute à l'élément <td id=""> une classe qui est converti en minuscule */
       } else {
+        alert("Ajout de symbole impossible !")
         round--
+        playerSwitch()
         symbolCheck()
       }
 
