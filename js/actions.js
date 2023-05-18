@@ -1,13 +1,66 @@
-let playerSymbol = ""
+let player1 = { 
+  symbol: "x", 
+  name: "Player 1"}
+let player2 = { 
+  symbol: "o",
+  name: "Player 2"}
+
+let player = player1.symbol 
 const playerName1 = document.getElementById("name1")
 const playerName2 = document.getElementById("name2")
+
+const playerNameArea1 = document.querySelector("#name1")
+const playerNameArea2 = document.querySelector("#name2")
 
 const nameField1 = document.createElement("input")
 nameField1.classList.add("nameField1")
 playerName1.appendChild(nameField1)
+nameField1.value = "Player 1"
 const nameField2 = document.createElement("input")
 nameField2.classList.add("nameField2")
 playerName2.appendChild(nameField2)
+nameField2.value = "Player 2"
+
+nameField1.addEventListener("click", function(){
+  nameField1.value = ""})
+    
+  nameField2.addEventListener("click", function(){
+  nameField2.value = ""})
+
+const displaySymbol1 = document.getElementById("symbol1")
+const displaySymbol2 = document.getElementById("symbol2")
+
+const selectSymbol1 = document.createElement("select")
+selectSymbol1.classList.add("selectSymbol1")
+
+const selectSymbol2 = document.createElement("select")
+selectSymbol2.classList.add("selectSymbol2")
+
+const optionSymbol1 = document.createElement("option")
+const optionSymbol2 = document.createElement("option")
+const optionSymbol3 = document.createElement("option")
+const optionSymbol4 = document.createElement("option")
+
+optionSymbol1.value = "x"
+optionSymbol2.value = "o"
+
+optionSymbol3.value = "o"
+optionSymbol4.value = "x"
+
+optionSymbol1.textContent = "x" 
+optionSymbol2.textContent = "o"
+
+optionSymbol3.textContent = "o"
+optionSymbol4.textContent = "x"
+
+selectSymbol1.appendChild(optionSymbol1) 
+selectSymbol1.appendChild(optionSymbol2)
+
+selectSymbol2.appendChild(optionSymbol3)
+selectSymbol2.appendChild(optionSymbol4)
+
+displaySymbol1.appendChild(selectSymbol1)
+displaySymbol2.appendChild(selectSymbol2)
 
 let round = 0
 let roundMax = false
@@ -19,6 +72,13 @@ let winPositions = [
   [1, 5, 9], [3, 5, 7]
 ]; 
 
+
+function displayName() {
+  if (player.name = nameField1.value) {
+    
+    nameField1.textContent = nameField1.value
+  }
+}
 
 function displayReset() {
   document.getElementById("resetBtn").addEventListener("click", function() { 
@@ -74,7 +134,7 @@ function checkWinner() { // Vérifie si toutes les combinaisons possibles sont v
     // pour chaque cellule de cette combinaison (et on veut récupérer un nouveau tableau de la même taille == 3)
     winPositionValue.map((winPositionCellValue, winPositionCellIndex) => 
       // comparaison et return (par la fonction fléchée) du booléen
-      document.getElementById(winPositions[winPositionIndex][winPositionCellIndex]).innerHTML === playerSymbol
+      document.getElementById(winPositions[winPositionIndex][winPositionCellIndex]).innerHTML === player
       // pour cette condition, si toutes (every) les comparaisons de cellules ont renvoyé true alors le tout est true, sinon false
     ).every(winPositionCellComparaison => winPositionCellComparaison)
   );
@@ -96,11 +156,11 @@ function checkWinner() { // Vérifie si toutes les combinaisons possibles sont v
       //   }
 
       // } else if (playerSymbol == "x") {
-      if (playerSymbol == "x") {
+      if (player1.symbol === "x") {
           document.getElementById("playerOne").style.backgroundColor="Red"
           document.getElementById("playerWinner").textContent = "GAGNE !!"
           gameFinished = true;
-      } else if (playerSymbol == "o") {
+      } else if (player2.symbol === "o") {
         document.getElementById("playerTwo").style.backgroundColor="Red"
         document.getElementById("playerWinner2").textContent = "GAGNE !!"
         gameFinished = true;
@@ -171,25 +231,25 @@ function checkWinner() { // Vérifie si toutes les combinaisons possibles sont v
 }
 
 function symbolCheck() {
-  if (playerSymbol === "")  { // Condition par défaut
-    playerSymbol = "x";
-    document.getElementById("symbol1").textContent = "Symbole : x"
-    document.getElementById("playerOne").style.backgroundColor="White"
-    document.getElementById("playerTwo").style.backgroundColor="Red"
-    document.getElementById("playerTwo").style.color="White"
-  } else if (playerSymbol === "x") {
-    playerSymbol = "o";
-    document.getElementById("symbol2").textContent = "Symbole : o"
+  if (player === player1.symbol) {
+    document.getElementById("symbol1").textContent = "Symbole : " + player1.symbol
     document.getElementById("playerTwo").style.backgroundColor="White"
     document.getElementById("playerOne").style.backgroundColor="Red"
     document.getElementById("playerOne").style.color="White"
-  } else {  
-    playerSymbol = "x"
-    document.getElementById("symbol1").textContent = "Symbole : x"
+  } else if (player === player2.symbol) {  
+    document.getElementById("symbol2").textContent = "Symbole : " + player2.symbol
     document.getElementById("playerOne").style.backgroundColor="White"
     document.getElementById("playerTwo").style.backgroundColor="Red"
     document.getElementById("playerTwo").style.color="White"
   } 
+}
+
+function playerSwitch() {
+  if (player === player1.symbol) {
+    player = player2.symbol
+  } else {
+    player = player1.symbol
+  }
 }
 
 for (let i = 1; i <= 9; i++) {
@@ -199,15 +259,13 @@ for (let i = 1; i <= 9; i++) {
   document.getElementById(i.toString()).addEventListener( 
   "click", function() {
       round++ // On démarre le compteur de tours
-      
-      
+
       symbolCheck() // On vérifie qui est le 1er joueur et qui joue pour chaque tour 
 
-      if (this.innerHTML === "" && !gameFinished) { // Si un élément <td id=""> est vide ou si la valeur de gameFinished n'est pas true :
-        this.innerHTML = playerSymbol; // Alors on y ajoute un symbole de type String
-        this.classList.add(playerSymbol.toLowerCase()); /* On ajoute à l'élément <td id=""> une classe qui est converti en minuscule */
+      if (!gameFinished) { // Si un élément <td id=""> est vide ou si la valeur de gameFinished n'est pas true :
+        this.innerHTML = player; // Alors on y ajoute un symbole de type String
+        this.classList.add(player.toLowerCase()); /* On ajoute à l'élément <td id=""> une classe qui est converti en minuscule */
       } else {
-        alert("Ajout de symbole impossible !")
         round--
         symbolCheck()
       }
@@ -219,17 +277,12 @@ for (let i = 1; i <= 9; i++) {
           if (roundMax) {
           gameFinished = true;
         }
-        
       } 
 
       if (roundMax && gameFinished) {
-        playerSymbol = null;
-        alert("Partie Terminé !")
+        player = null;
       }
-
+      playerSwitch()
       displayReset()
     });
 } 
-
-
-
