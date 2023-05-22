@@ -1,45 +1,90 @@
 let player1 = { 
-  symbol: "x", 
-  name: "Player 1"}
+  symbol: "x", // Symbole par défaut
+  name: "Player 1"} // Nom par défaut
 let player2 = { 
-  symbol: "o",
-  name: "Player 2"}
+  symbol: "o", // Symbole par défaut
+  name: "Player 2"} // Nom par défaut
 
 let player = player1.symbol 
-const playerName1 = document.getElementById("name1")
-const playerName2 = document.getElementById("name2")
 
 const playerNameArea1 = document.querySelector("#name1")
 const playerNameArea2 = document.querySelector("#name2")
 
+// Création des champs de texte pour écrire le nom du joueur
 const nameField1 = document.createElement("input")
 nameField1.classList.add("nameField1")
-playerName1.appendChild(nameField1)
-nameField1.value = "Player 1"
+let newNameField1 = nameField1.cloneNode()
+playerNameArea1.appendChild(newNameField1)
+newNameField1.value = player1.name
+
 const nameField2 = document.createElement("input")
 nameField2.classList.add("nameField2")
-playerName2.appendChild(nameField2)
-nameField2.value = "Player 2"
+let newNameField2 = nameField2.cloneNode()
+playerNameArea2.appendChild(newNameField2)
+newNameField2.value = player2.name
 
-nameField1.addEventListener("click", function(){
-  nameField1.value = ""})
+// Création des boutons pour valider le nom du joueur
+const nameButton1 = document.createElement("button")
+nameButton1.classList.add("nameButton1")
+playerNameArea1.appendChild(nameButton1)
+nameButton1.textContent = "Ready"
+
+const nameButton2 = document.createElement("button")
+nameButton2.classList.add("nameButton2")
+playerNameArea2.appendChild(nameButton2)
+nameButton2.textContent = "Ready"
+
+// Retire le texte superposé
+newNameField1.addEventListener("click", function(){
+  newNameField1.value = ""})
     
-  nameField2.addEventListener("click", function(){
-  nameField2.value = ""})
+newNameField2.addEventListener("click", function(){
+  newNameField2.value = ""})
+
+// Fait disparaitre le champ de texte et affiche le nom du joueur validé 
+nameButton1.addEventListener("click", function() {
+    if (newNameField1.value == "") {
+      playerNameArea1.innerHTML = player1.name
+    } else {
+      playerNameArea1.innerHTML = newNameField1.value
+    }
+    newNameField1.remove()
+})
+
+nameButton2.addEventListener("click", function() {
+    if (newNameField2.value == "") {
+      playerNameArea2.innerHTML = player2.name
+    } else {
+      playerNameArea2.innerHTML = newNameField2.value
+    }
+    newNameField2.remove()
+})
 
 const displaySymbol1 = document.getElementById("symbol1")
 const displaySymbol2 = document.getElementById("symbol2")
 
 const selectSymbol1 = document.createElement("select")
 selectSymbol1.classList.add("selectSymbol1")
+let newSelectSymbol1 = selectSymbol1.cloneNode()
 
 const selectSymbol2 = document.createElement("select")
 selectSymbol2.classList.add("selectSymbol2")
+let newSelectSymbol2 = selectSymbol2.cloneNode()
 
 const optionSymbol1 = document.createElement("option")
 const optionSymbol2 = document.createElement("option")
 const optionSymbol3 = document.createElement("option")
 const optionSymbol4 = document.createElement("option")
+
+const symbolButton1 = document.createElement("button")
+symbolButton1.classList.add("symbolButton1")
+displaySymbol1.appendChild(symbolButton1)
+symbolButton1.textContent = "Ready"
+
+const symbolButton2 = document.createElement("button")
+symbolButton2.classList.add("symbolButton2")
+displaySymbol2.appendChild(symbolButton2)
+symbolButton2.textContent = "Ready"
 
 optionSymbol1.value = "x"
 optionSymbol2.value = "o"
@@ -53,14 +98,34 @@ optionSymbol2.textContent = "o"
 optionSymbol3.textContent = "o"
 optionSymbol4.textContent = "x"
 
-selectSymbol1.appendChild(optionSymbol1) 
-selectSymbol1.appendChild(optionSymbol2)
+newSelectSymbol1.appendChild(optionSymbol1) 
+newSelectSymbol1.appendChild(optionSymbol2)
 
-selectSymbol2.appendChild(optionSymbol3)
-selectSymbol2.appendChild(optionSymbol4)
+newSelectSymbol2.appendChild(optionSymbol3)
+newSelectSymbol2.appendChild(optionSymbol4)
 
-displaySymbol1.appendChild(selectSymbol1)
-displaySymbol2.appendChild(selectSymbol2)
+displaySymbol1.appendChild(newSelectSymbol1)
+displaySymbol2.appendChild(newSelectSymbol2)
+
+symbolButton1.addEventListener("click", function() {
+  if (newSelectSymbol1.value == optionSymbol1.value) {
+    displaySymbol1.innerHTML = "Symbole : " + optionSymbol1.value
+  }
+  if (newSelectSymbol1.value == optionSymbol2.value ) {
+    displaySymbol1.innerHTML = "Symbole : " + optionSymbol2.value
+  }
+  newSelectSymbol1.remove()
+})
+
+symbolButton2.addEventListener("click", function() {
+  if (newSelectSymbol2.value == optionSymbol3.value) {
+    displaySymbol2.innerHTML = "Symbole : " + optionSymbol3.textContent
+  }
+  if (newSelectSymbol2.value == optionSymbol4.value) {
+    displaySymbol2.innerHTML = "Symbole : " + optionSymbol4.textContent
+  }
+  newSelectSymbol2.remove()
+})
 
 let round = 0
 let roundMax = false
@@ -72,19 +137,10 @@ let winPositions = [
   [1, 5, 9], [3, 5, 7]
 ]; 
 
-
-function displayName() {
-  if (player.name = nameField1.value) {
-    
-    nameField1.textContent = nameField1.value
-  }
-}
-
 function displayReset() {
   document.getElementById("resetBtn").addEventListener("click", function() { 
     location.reload()
 })
-
   if (gameFinished === false) {
     document.getElementById("resetBtn").style.display = "none"
   } else {
@@ -232,12 +288,12 @@ function checkWinner() { // Vérifie si toutes les combinaisons possibles sont v
 
 function symbolCheck() {
   if (player === player1.symbol) {
-    document.getElementById("symbol1").textContent = "Symbole : " + player1.symbol
+    
     document.getElementById("playerTwo").style.backgroundColor="White"
     document.getElementById("playerOne").style.backgroundColor="Red"
     document.getElementById("playerOne").style.color="White"
   } else if (player === player2.symbol) {  
-    document.getElementById("symbol2").textContent = "Symbole : " + player2.symbol
+
     document.getElementById("playerOne").style.backgroundColor="White"
     document.getElementById("playerTwo").style.backgroundColor="Red"
     document.getElementById("playerTwo").style.color="White"
