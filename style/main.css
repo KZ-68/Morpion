@@ -38,9 +38,18 @@ section.game {
     top: 10px;
 }
 
+.nameButton1 {
+    width: 55px;
+    height: 21px;
+    position: absolute;
+    left: 87px;
+}
+
 .nameField1 {
     border-radius: 15px;
-    width: 100px;
+    width: 85px;
+    position: absolute;
+    left: -20px;
 }
 
 #symbol1 {
@@ -49,6 +58,12 @@ section.game {
     left: 43px;
     font-size: 20px;
     margin: 0;
+}
+
+.symbolButton1 {
+    position: absolute;
+    left: 80px;
+    top: 7px;
 }
 
 table, td, th {
@@ -92,9 +107,18 @@ th {
     top: 10px;
 }
 
+.nameButton2 {
+    width: 55px;
+    height: 21px;
+    position: absolute;
+    right: -32px;
+}
+
 .nameField2 {
     border-radius: 15px;
-    width: 100px;
+    width: 85px;
+    position: absolute;
+    right: -140px;
 }
 
 #symbol2 {
@@ -103,6 +127,17 @@ th {
     left: 43px;
     font-size: 20px;
     margin: 0;
+}
+
+.selectSymbol2 {
+    position: absolute;
+    right: -102px;
+}
+
+.symbolButton2 {
+    position: absolute;
+    right: -25px;
+    top: 7px
 }
 
 .x {
@@ -141,10 +176,6 @@ th {
 
 #resetBtn:active {
     transform: scale(0.95);
-}
-
-.nameField2 {
-    border-radius: 15px;
 }
 
 select {
