@@ -1,11 +1,11 @@
 let player1 = { 
-  symbol: "x", // Symbole par défaut
+  symbol: "", // Symbole par défaut
   name: "Player 1"} // Nom par défaut
 let player2 = { 
-  symbol: "o", // Symbole par défaut
+  symbol: "", // Symbole par défaut
   name: "Player 2"} // Nom par défaut
 
-let player = player1.symbol 
+let defaultPlayer = "" // On crée une variable pour le joueur par défaut, qui est d'abord vide
 
 const playerNameArea1 = document.querySelector("#name1")
 const playerNameArea2 = document.querySelector("#name2")
@@ -60,18 +60,20 @@ nameButton2.addEventListener("click", function() {
     newNameField2.remove()
 })
 
+
 const displaySymbol1 = document.getElementById("symbol1")
 const displaySymbol2 = document.getElementById("symbol2")
 
-const selectSymbol1 = document.createElement("select")
+const selectSymbol1 = document.createElement("select") // Creation de la balise select pour le joueur 1 et affectation à une constante "selectSymbol1"
 selectSymbol1.classList.add("selectSymbol1")
-let newSelectSymbol1 = selectSymbol1.cloneNode()
+let newSelectSymbol1 = selectSymbol1.cloneNode() // Creation d'un clone de select 
 
 const selectSymbol2 = document.createElement("select")
 selectSymbol2.classList.add("selectSymbol2")
 let newSelectSymbol2 = selectSymbol2.cloneNode()
 
-const optionSymbol1 = document.createElement("option")
+// Creation de l'affichage des différentes options des balises select
+const optionSymbol1 = document.createElement("option") 
 const optionSymbol2 = document.createElement("option")
 const optionSymbol3 = document.createElement("option")
 const optionSymbol4 = document.createElement("option")
@@ -86,18 +88,21 @@ symbolButton2.classList.add("symbolButton2")
 displaySymbol2.appendChild(symbolButton2)
 symbolButton2.textContent = "Ready"
 
+// Affectation des valeurs de chaque options
 optionSymbol1.value = "x"
 optionSymbol2.value = "o"
 
 optionSymbol3.value = "o"
 optionSymbol4.value = "x"
 
+// Ajout du texte à afficher pour chaque options
 optionSymbol1.textContent = "x" 
 optionSymbol2.textContent = "o"
 
 optionSymbol3.textContent = "o"
 optionSymbol4.textContent = "x"
 
+// Affection des options pour chacune des deux balises select
 newSelectSymbol1.appendChild(optionSymbol1) 
 newSelectSymbol1.appendChild(optionSymbol2)
 
@@ -107,22 +112,30 @@ newSelectSymbol2.appendChild(optionSymbol4)
 displaySymbol1.appendChild(newSelectSymbol1)
 displaySymbol2.appendChild(newSelectSymbol2)
 
+// Evénement de clique pour le bouton de confirmation du symbole du premier joueur
 symbolButton1.addEventListener("click", function() {
   if (newSelectSymbol1.value == optionSymbol1.value) {
     displaySymbol1.innerHTML = "Symbole : " + optionSymbol1.value
+    player1.symbol = optionSymbol1.value
+    defaultPlayer = player1.symbol  
   }
   if (newSelectSymbol1.value == optionSymbol2.value ) {
     displaySymbol1.innerHTML = "Symbole : " + optionSymbol2.value
+    player1.symbol = optionSymbol2.value
+    defaultPlayer = player1.symbol 
   }
   newSelectSymbol1.remove()
 })
 
+// Evénement de clique pour le bouton de confirmation du symbole du deuxième joueur
 symbolButton2.addEventListener("click", function() {
   if (newSelectSymbol2.value == optionSymbol3.value) {
     displaySymbol2.innerHTML = "Symbole : " + optionSymbol3.textContent
+    player2.symbol = optionSymbol3.value
   }
   if (newSelectSymbol2.value == optionSymbol4.value) {
     displaySymbol2.innerHTML = "Symbole : " + optionSymbol4.textContent
+    player2.symbol = optionSymbol4.value
   }
   newSelectSymbol2.remove()
 })
@@ -190,7 +203,7 @@ function checkWinner() { // Vérifie si toutes les combinaisons possibles sont v
     // pour chaque cellule de cette combinaison (et on veut récupérer un nouveau tableau de la même taille == 3)
     winPositionValue.map((winPositionCellValue, winPositionCellIndex) => 
       // comparaison et return (par la fonction fléchée) du booléen
-      document.getElementById(winPositions[winPositionIndex][winPositionCellIndex]).innerHTML === player
+      document.getElementById(winPositions[winPositionIndex][winPositionCellIndex]).innerHTML === defaultPlayer
       // pour cette condition, si toutes (every) les comparaisons de cellules ont renvoyé true alors le tout est true, sinon false
     ).every(winPositionCellComparaison => winPositionCellComparaison)
   );
@@ -212,11 +225,21 @@ function checkWinner() { // Vérifie si toutes les combinaisons possibles sont v
       //   }
 
       // } else if (playerSymbol == "x") {
-      if (player1.symbol === "x") {
+      if (player1.symbol === optionSymbol1.value) {
           document.getElementById("playerOne").style.backgroundColor="Red"
           document.getElementById("playerWinner").textContent = "GAGNE !!"
           gameFinished = true;
-      } else if (player2.symbol === "o") {
+      } else if (player2.symbol === optionSymbol3.value) {
+        document.getElementById("playerTwo").style.backgroundColor="Red"
+        document.getElementById("playerWinner2").textContent = "GAGNE !!"
+        gameFinished = true;
+      }
+      
+      if (player1.symbol === optionSymbol2.value) {
+        document.getElementById("playerOne").style.backgroundColor="Red"
+        document.getElementById("playerWinner").textContent = "GAGNE !!"
+        gameFinished = true;
+      } else if (player2.symbol === optionSymbol4.value) {
         document.getElementById("playerTwo").style.backgroundColor="Red"
         document.getElementById("playerWinner2").textContent = "GAGNE !!"
         gameFinished = true;
@@ -287,12 +310,12 @@ function checkWinner() { // Vérifie si toutes les combinaisons possibles sont v
 }
 
 function symbolCheck() {
-  if (player === player1.symbol) {
+  if (defaultPlayer === player1.symbol) {
     
     document.getElementById("playerTwo").style.backgroundColor="White"
     document.getElementById("playerOne").style.backgroundColor="Red"
     document.getElementById("playerOne").style.color="White"
-  } else if (player === player2.symbol) {  
+  } else if (defaultPlayer === player2.symbol) {  
 
     document.getElementById("playerOne").style.backgroundColor="White"
     document.getElementById("playerTwo").style.backgroundColor="Red"
@@ -301,10 +324,10 @@ function symbolCheck() {
 }
 
 function playerSwitch() {
-  if (player === player1.symbol) {
-    player = player2.symbol
+  if (defaultPlayer === player1.symbol) {
+    defaultPlayer = player2.symbol
   } else {
-    player = player1.symbol
+    defaultPlayer = player1.symbol
   }
 }
 
@@ -318,9 +341,13 @@ for (let i = 1; i <= 9; i++) {
 
       symbolCheck() // On vérifie qui est le 1er joueur et qui joue pour chaque tour 
 
-      if (this.innerHTML == "" && !gameFinished) { // Si un élément <td id=""> est vide ou si la valeur de gameFinished n'est pas true :
-        this.innerHTML = player; // Alors on y ajoute un symbole de type String
-        this.classList.add(player.toLowerCase()); /* On ajoute à l'élément <td id=""> une classe qui est converti en minuscule */
+      if (this.innerHTML == "" && !gameFinished && defaultPlayer != "") { // Si un élément <td id=""> est vide ou si la valeur de gameFinished n'est pas true :
+        this.innerHTML = defaultPlayer; // Alors on y ajoute un symbole de type String
+        this.classList.add(defaultPlayer.toLowerCase()); /* On ajoute à l'élément <td id=""> une classe qui est converti en minuscule */
+        if ((player1.symbol == optionSymbol1.value && player2.symbol == optionSymbol4.value) || (player1.symbol == optionSymbol2.value && player2.symbol == optionSymbol3.value)) {
+          alert("Symbole des joueurs identique, choisissez à nouveau")
+          location.reload()
+        }
       } else {
         alert("Ajout de symbole impossible !")
         round--
@@ -338,7 +365,7 @@ for (let i = 1; i <= 9; i++) {
       } 
 
       if (roundMax && gameFinished) {
-        player = null;
+        defaultPlayer = null;
       }
       playerSwitch()
       displayReset()
