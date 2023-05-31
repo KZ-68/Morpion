@@ -1,11 +1,17 @@
 let player1 = { 
   symbol: "", // Symbole par défaut
-  name: "Player 1"} // Nom par défaut
+  name: "Player 1", // Nom par défaut
+  score: 0,
+  winner: false
+} 
 let player2 = { 
   symbol: "", // Symbole par défaut
-  name: "Player 2"} // Nom par défaut
+  name: "Player 2", // Nom par défaut
+  score: 0,
+  winner: false
+} 
 
-let defaultPlayer = "" // On crée une variable pour le joueur par défaut, qui est d'abord vide
+let currentPlayer = "" // On crée une variable pour le joueur en cours, qui est d'abord vide
 
 const playerNameArea1 = document.querySelector("#name1")
 const playerNameArea2 = document.querySelector("#name2")
@@ -117,12 +123,12 @@ symbolButton1.addEventListener("click", function() {
   if (newSelectSymbol1.value == optionSymbol1.value) {
     displaySymbol1.innerHTML = "Symbole : " + optionSymbol1.value
     player1.symbol = optionSymbol1.value
-    defaultPlayer = player1.symbol  
+    currentPlayer = player1.symbol  
   }
   if (newSelectSymbol1.value == optionSymbol2.value ) {
     displaySymbol1.innerHTML = "Symbole : " + optionSymbol2.value
     player1.symbol = optionSymbol2.value
-    defaultPlayer = player1.symbol 
+    currentPlayer = player1.symbol 
   }
   newSelectSymbol1.remove()
 })
@@ -140,6 +146,31 @@ symbolButton2.addEventListener("click", function() {
   newSelectSymbol2.remove()
 })
 
+const playerScoreArea1 = document.getElementById("playerOneZone2")
+const playerScoreArea2 = document.getElementById("playerTwoZone2")
+
+const playerScore1 = document.createElement("p")
+playerScore1.classList.add("playerScore1")
+playerScoreArea1.appendChild(playerScore1)
+playerScore1.innerText = `Score : ${player1.score}`
+
+const playerScore2 = document.createElement("p")
+playerScore2.classList.add("playerScore2")
+playerScoreArea2.appendChild(playerScore2)
+playerScore2.innerText = `Score : ${player2.score}`
+
+function addScore() {
+  if (gameFinished && player1.winner === true) {
+    player1.score++
+    playerScore1.innerText = `Score : ${player1.score}`
+  }
+
+  if (gameFinished && player2.winner === true) {
+    player2.score++
+    playerScore2.innerText = `Score : ${player2.score}`
+  }
+}
+
 let round = 0
 let roundMax = false
 let gameFinished = false
@@ -149,6 +180,7 @@ let winPositions = [
   [2, 5, 8], [3, 6, 9], 
   [1, 5, 9], [3, 5, 7]
 ]; 
+
 
 function displayReset() {
   document.getElementById("resetBtn").addEventListener("click", function() { 
@@ -203,7 +235,7 @@ function checkWinner() { // Vérifie si toutes les combinaisons possibles sont v
     // pour chaque cellule de cette combinaison (et on veut récupérer un nouveau tableau de la même taille == 3)
     winPositionValue.map((winPositionCellValue, winPositionCellIndex) => 
       // comparaison et return (par la fonction fléchée) du booléen
-      document.getElementById(winPositions[winPositionIndex][winPositionCellIndex]).innerHTML === defaultPlayer
+      document.getElementById(winPositions[winPositionIndex][winPositionCellIndex]).innerHTML === currentPlayer
       // pour cette condition, si toutes (every) les comparaisons de cellules ont renvoyé true alors le tout est true, sinon false
     ).every(winPositionCellComparaison => winPositionCellComparaison)
   );
@@ -225,23 +257,27 @@ function checkWinner() { // Vérifie si toutes les combinaisons possibles sont v
       //   }
 
       // } else if (playerSymbol == "x") {
-      if (player1.symbol === optionSymbol1.value) {
+      if (currentPlayer == player1.symbol && player1.symbol === optionSymbol1.value) {
           document.getElementById("playerOne").style.backgroundColor="Red"
           document.getElementById("playerWinner").textContent = "GAGNE !!"
+          player1.winner = true;
           gameFinished = true;
-      } else if (player2.symbol === optionSymbol3.value) {
+      } else if (currentPlayer == player2.symbol && player2.symbol === optionSymbol3.value) {
         document.getElementById("playerTwo").style.backgroundColor="Red"
         document.getElementById("playerWinner2").textContent = "GAGNE !!"
+        player2.winner = true;
         gameFinished = true;
       }
       
-      if (player1.symbol === optionSymbol2.value) {
+      if (currentPlayer == player1.symbol && player1.symbol === optionSymbol2.value) {
         document.getElementById("playerOne").style.backgroundColor="Red"
         document.getElementById("playerWinner").textContent = "GAGNE !!"
+        player1.winner = true;
         gameFinished = true;
-      } else if (player2.symbol === optionSymbol4.value) {
+      } else if (currentPlayer == player2.symbol && player2.symbol === optionSymbol4.value) {
         document.getElementById("playerTwo").style.backgroundColor="Red"
         document.getElementById("playerWinner2").textContent = "GAGNE !!"
+        player2.winner = true;
         gameFinished = true;
       }
           
@@ -310,12 +346,12 @@ function checkWinner() { // Vérifie si toutes les combinaisons possibles sont v
 }
 
 function symbolCheck() {
-  if (defaultPlayer === player1.symbol) {
+  if (currentPlayer === player1.symbol) {
     
     document.getElementById("playerTwo").style.backgroundColor="White"
     document.getElementById("playerOne").style.backgroundColor="Red"
     document.getElementById("playerOne").style.color="White"
-  } else if (defaultPlayer === player2.symbol) {  
+  } else if (currentPlayer === player2.symbol) {  
 
     document.getElementById("playerOne").style.backgroundColor="White"
     document.getElementById("playerTwo").style.backgroundColor="Red"
@@ -324,10 +360,10 @@ function symbolCheck() {
 }
 
 function playerSwitch() {
-  if (defaultPlayer === player1.symbol) {
-    defaultPlayer = player2.symbol
+  if (currentPlayer === player1.symbol) {
+    currentPlayer = player2.symbol
   } else {
-    defaultPlayer = player1.symbol
+    currentPlayer = player1.symbol
   }
 }
 
@@ -339,11 +375,11 @@ for (let i = 1; i <= 9; i++) {
   "click", function() {
       round++ // On démarre le compteur de tours
 
-      symbolCheck() // On vérifie qui est le 1er joueur et qui joue pour chaque tour 
+      symbolCheck() // On vérifie qui est le 1er joueur et qui joue pour chaque tour
 
-      if (this.innerHTML == "" && !gameFinished && defaultPlayer != "") { // Si un élément <td id=""> est vide ou si la valeur de gameFinished n'est pas true :
-        this.innerHTML = defaultPlayer; // Alors on y ajoute un symbole de type String
-        this.classList.add(defaultPlayer.toLowerCase()); /* On ajoute à l'élément <td id=""> une classe qui est converti en minuscule */
+      if (this.innerHTML == "" && !gameFinished && currentPlayer != "") { // Si un élément <td id=""> est vide ou si la valeur de gameFinished n'est pas true :
+        this.innerHTML = currentPlayer; // Alors on y ajoute un symbole de type String
+        this.classList.add(currentPlayer.toLowerCase()); /* On ajoute à l'élément <td id=""> une classe qui est converti en minuscule */
         if ((player1.symbol == optionSymbol1.value && player2.symbol == optionSymbol4.value) || (player1.symbol == optionSymbol2.value && player2.symbol == optionSymbol3.value)) {
           alert("Symbole des joueurs identique, choisissez à nouveau")
           location.reload()
@@ -353,7 +389,7 @@ for (let i = 1; i <= 9; i++) {
         round--
         playerSwitch()
         symbolCheck()
-      }
+      } 
 
       checkWinner()
 
@@ -365,9 +401,10 @@ for (let i = 1; i <= 9; i++) {
       } 
 
       if (roundMax && gameFinished) {
-        defaultPlayer = null;
+        currentPlayer = null;
       }
       playerSwitch()
+      addScore()
       displayReset()
     });
 } 
