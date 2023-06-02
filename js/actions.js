@@ -1,13 +1,13 @@
 let player1 = { 
   symbol: "", // Symbole par défaut
   name: "Player 1", // Nom par défaut
-  score: 0,
+  score1: JSON.parse(localStorage.getItem('score1')),
   winner: false
 } 
 let player2 = { 
   symbol: "", // Symbole par défaut
   name: "Player 2", // Nom par défaut
-  score: 0,
+  score2: JSON.parse(localStorage.getItem('score2')),
   winner: false
 } 
 
@@ -152,22 +152,29 @@ const playerScoreArea2 = document.getElementById("playerTwoZone2")
 const playerScore1 = document.createElement("p")
 playerScore1.classList.add("playerScore1")
 playerScoreArea1.appendChild(playerScore1)
-playerScore1.innerText = `Score : ${player1.score}`
+playerScore1.innerHTML = `Score : ${JSON.parse(localStorage.getItem('score1'))}`
+if (JSON.parse(localStorage.getItem('score1')) === 0 ) {
+  playerScore1.innerHTML = `Score : ${0}`
+}
 
 const playerScore2 = document.createElement("p")
 playerScore2.classList.add("playerScore2")
 playerScoreArea2.appendChild(playerScore2)
-playerScore2.innerText = `Score : ${player2.score}`
+playerScore2.innerHTML = `Score : ${JSON.parse(localStorage.getItem('score2'))}`
+if (JSON.parse(localStorage.getItem('score2')) === 0 ) {
+  playerScore2.innerHTML = `Score : ${0}`
+}
 
-function addScore() {
+
+function storageScore() {
   if (gameFinished && player1.winner === true) {
-    player1.score++
-    playerScore1.innerText = `Score : ${player1.score}`
+    player1.score1++
+    localStorage.setItem('score1', JSON.stringify(player1.score1))
   }
 
   if (gameFinished && player2.winner === true) {
-    player2.score++
-    playerScore2.innerText = `Score : ${player2.score}`
+    player2.score2++ 
+    localStorage.setItem('score2', JSON.stringify(player2.score2))
   }
 }
 
@@ -404,7 +411,7 @@ for (let i = 1; i <= 9; i++) {
         currentPlayer = null;
       }
       playerSwitch()
-      addScore()
+      storageScore()
       displayReset()
     });
 } 
