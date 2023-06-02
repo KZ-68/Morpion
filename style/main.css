@@ -205,3 +205,172 @@ select {
 .playerScore1, .playerScore2 {
     margin: 0;
 }
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    section.game {
+        display: flex;
+        flex-direction: column;
+        width: 245px;
+        justify-content: center;
+        position: absolute;
+        left: 63px;
+    }
+
+    #playerOne {
+        position: relative;
+        border: 2px solid gray;
+        width: 241px;
+        display: flex;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-left-radius: 0px;
+        flex-direction: column;
+    }
+
+    #name1 {
+        margin: 0;
+        position: absolute;
+        left: 64px;
+        top: 10px;
+    }
+
+    .nameField1 {
+        border-radius: 15px;
+        width: 85px;
+        position: absolute;
+        left: 5px;
+    }
+
+    .nameButton1 {
+        width: 55px;
+        height: 21px;
+        position: absolute;
+        left: 115px;
+    }
+
+    #symbol1 {
+        position: absolute;
+        top: 42px;
+        left: 73px;
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .symbolButton1 {
+        position: absolute;
+        left: 106px;
+        top: 10px;
+    }
+
+    .selectSymbol1 {
+        padding: 8px;
+        font-size: 16px;
+        border-radius: 10px;
+        cursor: pointer;
+        position: absolute;
+        left: 18px;
+    }
+
+    #playerOneZone2 {
+        position: relative;
+        border-bottom: 2px solid gray;
+        height: 69px;
+    }
+
+    .playerScore1 {
+        position: absolute;
+        left: 85px;
+        top: 19px;
+        font-size: 19px;
+    }
+
+    #playerOneZone3 {
+        height: 57px;
+    }
+
+    td {
+        width: 75px;
+        height: 75px;
+        text-align: center;
+    }
+
+    #playerTwo {
+        position: relative;
+        border: 2px solid gray;
+        width: 241px;
+        display: flex;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+        border-top-right-radius: 0px;
+        flex-direction: column-reverse;
+    }
+
+    #playerTwoZone1 {
+        border-bottom: none;
+        height: 102px;
+    }
+
+    #name2 {
+        margin: 0;
+        position: absolute;
+        left: 73px;
+        top: 186px;
+    }
+
+    .nameField2 {
+        border-radius: 15px;
+        width: 85px;
+        position: absolute;
+        left: -7px;
+    }
+
+    .nameButton2 {
+        width: 55px;
+        height: 21px;
+        position: absolute;
+        left: 104px;
+    }
+
+    #symbol2 {
+        position: absolute;
+        top: 139px;
+        left: 77px;
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .selectSymbol2 {
+        position: absolute;
+        right: -60px;
+    }
+
+    .symbolButton2 {
+        position: absolute;
+        top: 7px;
+        left: 100px;
+        right: -155px;
+    }
+
+    #playerTwoZone2 {
+        position: relative;
+        border-top: 2px solid gray;
+        height: 63px;
+    }
+
+    .playerScore2 {
+        position: absolute;
+        left: 85px;
+        top: 19px;
+        font-size: 19px;
+    }
+
+    #playerTwoZone3 {
+        height: 63px;
+    }
+
+    #resetBtn {
+        position: absolute;
+        left: 94px;
+        top: 828px;
+    }
+}
