@@ -153,7 +153,7 @@ const playerScore1 = document.createElement("p")
 playerScore1.classList.add("playerScore1")
 playerScoreArea1.appendChild(playerScore1)
 playerScore1.innerHTML = `Score : ${JSON.parse(localStorage.getItem('score1'))}`
-if (JSON.parse(localStorage.getItem('score1')) === 0 ) {
+if (JSON.parse(localStorage.getItem('score1')) === null ) {
   playerScore1.innerHTML = `Score : ${0}`
 }
 
@@ -161,7 +161,7 @@ const playerScore2 = document.createElement("p")
 playerScore2.classList.add("playerScore2")
 playerScoreArea2.appendChild(playerScore2)
 playerScore2.innerHTML = `Score : ${JSON.parse(localStorage.getItem('score2'))}`
-if (JSON.parse(localStorage.getItem('score2')) === 0 ) {
+if (JSON.parse(localStorage.getItem('score2')) === null ) {
   playerScore2.innerHTML = `Score : ${0}`
 }
 
@@ -197,6 +197,18 @@ function displayReset() {
     document.getElementById("resetBtn").style.display = "none"
   } else {
     document.getElementById("resetBtn").style.display = "block"
+  }
+}
+
+function displayScoreReset() {
+  document.getElementById("resetScoreBtn").addEventListener("click", function() { 
+    localStorage.removeItem('score1')
+    localStorage.removeItem('score2')
+})
+  if (gameFinished === false) {
+    document.getElementById("resetScoreBtn").style.display = "none"
+  } else {
+    document.getElementById("resetScoreBtn").style.display = "block"
   }
 }
 
@@ -266,24 +278,24 @@ function checkWinner() { // Vérifie si toutes les combinaisons possibles sont v
       // } else if (playerSymbol == "x") {
       if (currentPlayer == player1.symbol && player1.symbol === optionSymbol1.value) {
           document.getElementById("playerOne").style.backgroundColor="Red"
-          document.getElementById("playerWinner").textContent = "GAGNE !!"
+          document.getElementById("playerWinner").textContent = "GAGNEE !!"
           player1.winner = true;
           gameFinished = true;
       } else if (currentPlayer == player2.symbol && player2.symbol === optionSymbol3.value) {
         document.getElementById("playerTwo").style.backgroundColor="Red"
-        document.getElementById("playerWinner2").textContent = "GAGNE !!"
+        document.getElementById("playerWinner2").textContent = "GAGNEE !!"
         player2.winner = true;
         gameFinished = true;
       }
       
       if (currentPlayer == player1.symbol && player1.symbol === optionSymbol2.value) {
         document.getElementById("playerOne").style.backgroundColor="Red"
-        document.getElementById("playerWinner").textContent = "GAGNE !!"
+        document.getElementById("playerWinner").textContent = "GAGNEE !!"
         player1.winner = true;
         gameFinished = true;
       } else if (currentPlayer == player2.symbol && player2.symbol === optionSymbol4.value) {
         document.getElementById("playerTwo").style.backgroundColor="Red"
-        document.getElementById("playerWinner2").textContent = "GAGNE !!"
+        document.getElementById("playerWinner2").textContent = "GAGNEE !!"
         player2.winner = true;
         gameFinished = true;
       }
@@ -413,5 +425,6 @@ for (let i = 1; i <= 9; i++) {
       playerSwitch()
       storageScore()
       displayReset()
+      displayScoreReset()
     });
 } 
