@@ -2,6 +2,12 @@ h1 {
     text-align: center;
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 section.game {
     display: flex;
     flex-direction: row;
@@ -40,10 +46,15 @@ section.game {
 }
 
 .nameButton1 {
-    width: 55px;
-    height: 21px;
+    width: 56px;
+    height: 24px;
     position: absolute;
     left: 87px;
+    color: white;
+    background: firebrick;
+    border-color: firebrick;
+    border: none;
+    border-radius: 5px;
 }
 
 .nameField1 {
@@ -62,9 +73,16 @@ section.game {
 }
 
 .symbolButton1 {
+    width: 56px;
+    height: 24px;
     position: absolute;
     left: 80px;
     top: 7px;
+    color: white;
+    background: firebrick;
+    border-color: firebrick;
+    border: none;
+    border-radius: 5px;
 }
 
 table, td, th {
@@ -110,10 +128,15 @@ th {
 }
 
 .nameButton2 {
-    width: 55px;
-    height: 21px;
+    width: 56px;
+    height: 24px;
     position: absolute;
     right: -32px;
+    color: white;
+    background: firebrick;
+    border-color: firebrick;
+    border: none;
+    border-radius: 5px;
 }
 
 .nameField2 {
@@ -137,9 +160,16 @@ th {
 }
 
 .symbolButton2 {
+    width: 56px;
+    height: 24px;
     position: absolute;
     right: -25px;
-    top: 7px
+    top: 7px;
+    color: white;
+    background: firebrick;
+    border-color: firebrick;
+    border: none;
+    border-radius: 5px;
 }
 
 .x {
@@ -169,14 +199,19 @@ th {
 
 #playerWinner, #playerWinner2 {
     font-weight: 900;
-    font-size: 30px;
+    font-size: 26px;
     margin: 25px;
 }
 
+.btnZone {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    justify-content: center;
+    gap: 54px;
+}
+
 #resetBtn {
-    position: absolute;
-    left: 875px;
-    top: 420px;
     border-radius: 20px;
     padding: 20px 50px;
     font-size: 35px;
@@ -195,6 +230,25 @@ th {
     transform: scale(0.95);
 }
 
+#resetScoreBtn {
+    border-radius: 20px;
+    padding: 20px 50px;
+    font-size: 35px;
+    background-color:firebrick;
+    border-color: firebrick;
+    border: none;
+    color: white;
+}
+
+#resetScoreBtn:hover {
+    background-color: red;
+    cursor: pointer;
+}
+
+#resetScoreBtn:active {
+    transform: scale(0.95);
+}
+
 select {
     padding: 8px;
     font-size: 16px;
@@ -207,13 +261,15 @@ select {
 }
 
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    main {
+        align-items: center;
+    }
+    
     section.game {
         display: flex;
         flex-direction: column;
         width: 245px;
         justify-content: center;
-        position: absolute;
-        left: 63px;
     }
 
     #playerOne {
@@ -368,9 +424,7 @@ select {
         height: 63px;
     }
 
-    #resetBtn {
-        position: absolute;
-        left: 94px;
-        top: 828px;
+    .btnZone {
+        flex-direction: column;
     }
 }
