@@ -1,3 +1,8 @@
+function toggleDarkMode() {
+  var element = document.body;
+  element.classList.toggle("dark-mode");
+}
+
 let player1 = { 
   symbol: "", // Symbole par défaut
   name: "Player 1", // Nom par défaut
@@ -352,7 +357,7 @@ function checkWinner() { // Vérifie si toutes les combinaisons possibles sont v
           // pour chaque position
           winPositions.forEach((winPositionValue, winPositionIndex) => {
             // si la condition au même index est vraie
-            if (conditions[winPositionIndex]) {
+            if (conditions[winPositionIndex] && currentPlayer != "") {
               // pour chaque cellule (de cette combinaison de position)
               winPositionValue.forEach((winPositionCellValue, winPositionCellIndex) => 
                 // on applique la couleur rouge
@@ -365,17 +370,17 @@ function checkWinner() { // Vérifie si toutes les combinaisons possibles sont v
 }
 
 function symbolCheck() {
-  if (currentPlayer === player1.symbol) {
-    
+  if (currentPlayer === player1.symbol && currentPlayer != "") {
     document.getElementById("playerTwo").style.backgroundColor="White"
+    document.getElementById("playerTwo").style.color="Black"
     document.getElementById("playerOne").style.backgroundColor="Red"
     document.getElementById("playerOne").style.color="White"
-  } else if (currentPlayer === player2.symbol) {  
-
+  } else if (currentPlayer === player2.symbol && currentPlayer != "") {  
     document.getElementById("playerOne").style.backgroundColor="White"
+    document.getElementById("playerOne").style.color="Black"
     document.getElementById("playerTwo").style.backgroundColor="Red"
     document.getElementById("playerTwo").style.color="White"
-  } 
+  }
 }
 
 function playerSwitch() {
@@ -403,7 +408,11 @@ for (let i = 1; i <= 9; i++) {
           alert("Symbole des joueurs identique, choisissez à nouveau")
           location.reload()
         }
-      } else {
+      } else if (player1.symbol == "" || player2.symbol == "") {
+        alert("Veuillez choisir un symbole avant de lancer")
+        round = 0
+      }
+      else {
         alert("Ajout de symbole impossible !")
         round--
         playerSwitch()
